@@ -1,0 +1,62 @@
+<section id="contact" class="py-5 bg-black bg-opacity-25">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+        <div class="text-center mb-5">
+          <h2 class="section-heading"><span class="gradient-text">CONTACT US</span></h2>
+          <p class="mt-2 fs-5 text-secondary font-monospace">
+            PARTNERSHIP INQUIRIES // GENERAL QUESTIONS
+          </p>
+        </div>
+        
+        <div class="glass-card p-4 p-md-5 rounded-1">
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-4">
+              <label for="name" class="form-label text-uppercase small tracking-wide text-primary">Full Name</label>
+              <input type="text" class="form-control bg-dark text-white border-secondary rounded-0 p-3" id="name" formControlName="name" placeholder="ENTER YOUR NAME" [class.is-invalid]="name.invalid && (name.dirty || name.touched)">
+              @if (name.invalid && (name.dirty || name.touched)) {
+                <div class="invalid-feedback">Name is required.</div>
+              }
+            </div>
+            <div class="mb-4">
+              <label for="email" class="form-label text-uppercase small tracking-wide text-primary">Email Address</label>
+              <input type="email" class="form-control bg-dark text-white border-secondary rounded-0 p-3" id="email" formControlName="email" placeholder="ENTER YOUR EMAIL" [class.is-invalid]="email.invalid && (email.dirty || email.touched)">
+              @if (email.invalid && (email.dirty || email.touched)) {
+                <div class="invalid-feedback">Valid email is required.</div>
+              }
+            </div>
+            <div class="mb-4">
+              <label for="message" class="form-label text-uppercase small tracking-wide text-primary">Message</label>
+              <textarea class="form-control bg-dark text-white border-secondary rounded-0 p-3" id="message" rows="5" formControlName="message" placeholder="ENTER YOUR MESSAGE" [class.is-invalid]="message.invalid && (message.dirty || message.touched)"></textarea>
+              @if (message.invalid && (message.dirty || message.touched)) {
+                <div class="invalid-feedback">Message is required (min 10 chars).</div>
+              }
+            </div>
+            
+            <div class="text-center mt-5">
+              <button type="submit" class="btn btn-primary btn-lg px-5 py-3 fw-bold rounded-0 w-100 text-uppercase tracking-wider" [disabled]="submitting()">
+                @if (submitting()) {
+                  <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                  <span role="status"> TRANSMITTING...</span>
+                } @else {
+                  <span>INITIATE CONTACT</span>
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+
+        @if (successMessage()) {
+          <div class="alert alert-success mt-4 bg-success bg-opacity-25 border-success text-white rounded-0" role="alert">
+            {{ successMessage() }}
+          </div>
+        }
+        @if (errorMessage()) {
+          <div class="alert alert-danger mt-4 bg-danger bg-opacity-25 border-danger text-white rounded-0" role="alert">
+            {{ errorMessage() }}
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

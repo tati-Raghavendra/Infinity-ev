@@ -1,0 +1,30 @@
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top backdrop-blur">
+    <div class="container">
+      <a class="navbar-brand fs-3 fw-bold d-flex align-items-center gap-2" href="#hero" (click)="scrollTo('hero', $event)">
+        <!-- Simple tech logo icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+        <span>INFINITY <span class="text-primary">EV</span></span>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0 align-items-center gap-3">
+          <li class="nav-item">
+            <a class="nav-link text-uppercase fw-medium tracking-wide" href="#solution" (click)="scrollTo('solution', $event)">Technology</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase fw-medium tracking-wide" href="#benefits" (click)="scrollTo('benefits', $event)">Benefits</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase fw-medium tracking-wide" href="#team" (click)="scrollTo('team', $event)">Team</a>
+          </li>
+          <li class="nav-item">
+            <a href="#contact" class="btn btn-outline-light rounded-0 px-4 fw-bold" (click)="scrollTo('contact', $event)">CONTACT US</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

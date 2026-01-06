@@ -1,0 +1,89 @@
+<section id="hero" class="position-relative vh-100 d-flex align-items-center justify-content-center text-center text-white overflow-hidden">
+  
+  <!-- HUD / Tech Overlay Elements -->
+  <div class="position-absolute top-0 start-0 w-100 h-100 pointer-events-none z-1">
+    <div class="position-absolute top-0 start-0 border-start border-top border-primary opacity-50 m-4" style="width: 100px; height: 100px;"></div>
+    <div class="position-absolute top-0 end-0 border-end border-top border-primary opacity-50 m-4" style="width: 100px; height: 100px;"></div>
+    <div class="position-absolute bottom-0 start-0 border-start border-bottom border-primary opacity-50 m-4" style="width: 100px; height: 100px;"></div>
+    <div class="position-absolute bottom-0 end-0 border-end border-bottom border-primary opacity-50 m-4" style="width: 100px; height: 100px;"></div>
+    
+    <!-- Scanning Line Animation -->
+    <div class="position-absolute w-100 bg-primary opacity-25" style="height: 1px; top: 50%; animation: scan 4s infinite linear;"></div>
+
+    <!-- 3D Grid Overlay (Visible only in 3D Mode) -->
+    <div class="position-absolute w-100 h-100" 
+         [style.background]="is3DView() ? 'linear-gradient(rgba(0, 229, 255, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 229, 255, 0.2) 1px, transparent 1px)' : 'none'"
+         [style.background-size]="'50px 50px'"
+         [style.transform]="is3DView() ? 'perspective(500px) rotateX(20deg)' : 'none'"
+         [style.opacity]="is3DView() ? '0.4' : '0'"
+         style="transition: opacity 0.5s ease;">
+    </div>
+  </div>
+
+  <div class="position-absolute top-0 start-0 w-100 h-100 z-0">
+     <!-- Darker, more mysterious EV concept -->
+     <img src="https://i.pinimg.com/736x/a2/c8/ef/a2c8ef5b89a91d163a167abbd778339c.jpg" alt="Infinity EV Concept 3D Model" 
+          class="w-100 h-100 object-fit-cover opacity-75 transition-all duration-1000" 
+          [class.wireframe-mode]="is3DView()"
+          style="filter: contrast(1.2) brightness(0.8);">
+     <div class="position-absolute bottom-0 w-100 h-50 bg-gradient-to-t from-black to-transparent"></div>
+  </div>
+
+  <div class="position-relative z-2 container px-3">
+    @if (!is3DView()) {
+      <div class="d-inline-block border border-primary px-3 py-1 text-primary text-uppercase tracking-wider mb-4 bg-black bg-opacity-50 rounded-1">
+        Prototype V1.0 Ready
+      </div>
+      <h1 class="display-1 fw-bold mb-2 text-uppercase" style="text-shadow: 0 0 30px rgba(0,229,255,0.3);">
+        Infinity <span class="text-primary">EV</span>
+      </h1>
+      <p class="lead fs-4 fw-light col-md-8 mx-auto text-light opacity-75 mb-5 font-monospace">
+        SELF-RECHARGING // DUAL BATTERY // AI STABILIZED
+      </p>
+    } @else {
+      <!-- Info displayed during 3D Mode -->
+       <div class="position-absolute top-50 start-50 translate-middle w-100">
+         <div class="d-flex justify-content-around align-items-center text-primary font-monospace small">
+            <div class="bg-black bg-opacity-75 p-2 border border-primary">BATTERY: 100%</div>
+            <div class="bg-black bg-opacity-75 p-2 border border-primary">MOTOR: ACTIVE</div>
+            <div class="bg-black bg-opacity-75 p-2 border border-primary">AI: STABILIZED</div>
+         </div>
+       </div>
+    }
+
+    <div class="d-flex gap-3 justify-content-center flex-wrap" [class.mt-5]="is3DView()" [style.transform]="is3DView() ? 'translateY(200px)' : 'none'" style="transition: transform 0.5s;">
+      @if (!is3DView()) {
+        <a href="#solution" class="btn btn-primary btn-lg px-5 py-3 fw-bold text-uppercase rounded-0 clip-corner" (click)="scrollTo('solution', $event)">
+          Explore Technology
+        </a>
+      }
+      <button class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase rounded-0 clip-corner d-flex align-items-center gap-2" 
+              [class.bg-primary]="is3DView()"
+              [class.text-black]="is3DView()"
+              [class.border-primary]="is3DView()"
+              (click)="toggle3D()">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 10l5 5-5 5"></path><path d="M4 4v7a4 4 0 004 4h12"></path></svg>
+        {{ is3DView() ? 'EXIT BLUEPRINT VIEW' : '3D MODEL VIEW' }}
+      </button>
+    </div>
+  </div>
+
+  <style>
+    @keyframes scan {
+      0% { top: 0%; opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.5; }
+      100% { top: 100%; opacity: 0; }
+    }
+    .clip-corner {
+      clip-path: polygon(0 0, 100% 0, 100% 80%, 90% 100%, 0 100%);
+    }
+    .wireframe-mode {
+       filter: grayscale(100%) invert(100%) contrast(150%) brightness(0.8) hue-rotate(180deg) !important;
+       transform: scale(1.05);
+    }
+    .transition-all {
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  </style>
+</section>

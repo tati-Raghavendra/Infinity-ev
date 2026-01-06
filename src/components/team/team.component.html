@@ -1,0 +1,28 @@
+<section id="team" class="py-5">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-heading">CORE <span class="gradient-text">TEAM</span></h2>
+      <p class="mt-2 fs-5 text-secondary font-monospace">VISIONARIES // ENGINEERS // EXECUTIVES</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+      @for(member of teamMembers(); track member.name) {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+          <div class="glass-card text-center h-100 border-0 position-relative group">
+            <div class="card-body p-4">
+              <div class="d-inline-block position-relative mb-3">
+                  <div class="position-absolute w-100 h-100 rounded-circle border border-primary opacity-50" style="transform: scale(1.1);"></div>
+                  <img class="rounded-circle object-fit-cover border border-2 border-secondary" [ngSrc]="member.imageUrl" [alt]="member.name" width="120" height="120">
+              </div>
+              <h3 class="h5 card-title fw-bold mb-1 text-white text-uppercase">{{ member.name }}</h3>
+              <p class="small text-primary font-monospace mb-2"></p>
+              <a [href]="'mailto:' + member.email" class="text-secondary text-decoration-none small hover-text-primary">{{ member.email }}</a>
+            </div>
+            <!-- Tech corner accents -->
+            <div class="position-absolute top-0 start-0 border-top border-start border-primary w-25 h-25 opacity-25"></div>
+            <div class="position-absolute bottom-0 end-0 border-bottom border-end border-primary w-25 h-25 opacity-25"></div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,58 @@
+<div class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+  <div class="col-md-5 col-lg-4">
+    <div class="glass-card p-4 p-md-5 rounded-1 position-relative overflow-hidden">
+      <!-- Decorative scanning line -->
+      <div class="position-absolute top-0 start-0 w-100 bg-primary opacity-25" style="height: 1px; animation: scan 3s infinite linear;"></div>
+      
+      <div class="text-center mb-4">
+        <h2 class="h4 text-primary fw-bold text-uppercase tracking-widest">System Access</h2>
+        <p class="small text-secondary font-monospace">RESTRICTED AREA // AUTHORIZED PERSONNEL ONLY</p>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label text-uppercase small text-secondary">Operator ID</label>
+          <div class="input-group">
+            <span class="input-group-text bg-dark border-secondary text-primary rounded-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <input type="text" formControlName="username" class="form-control bg-dark text-white border-secondary rounded-0 shadow-none" placeholder="ENTER ID">
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label text-uppercase small text-secondary">Passcode</label>
+          <div class="input-group">
+             <span class="input-group-text bg-dark border-secondary text-primary rounded-0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </span>
+            <input type="password" formControlName="password" class="form-control bg-dark text-white border-secondary rounded-0 shadow-none" placeholder="ENTER KEY">
+          </div>
+        </div>
+
+        @if (error()) {
+          <div class="alert alert-danger bg-danger bg-opacity-25 border-danger text-white rounded-0 font-monospace small mb-4 py-2 text-center">
+            {{ error() }}
+          </div>
+        }
+
+        <button type="submit" class="btn btn-primary w-100 rounded-0 fw-bold text-uppercase py-2" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner-border spinner-border-sm me-2"></span> AUTHENTICATING...
+          } @else {
+            INITIATE LINK
+          }
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  @keyframes scan {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { top: 100%; opacity: 0; }
+  }
+</style>

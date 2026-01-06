@@ -1,0 +1,24 @@
+<section id="roadblocks" class="py-5 bg-transparent">
+  <div class="container pt-5">
+    <div class="text-center mb-5">
+      <h2 class="section-heading">CURRENT <span class="gradient-text">LIMITATIONS</span></h2>
+      <p class="mt-2 fs-5 text-secondary col-md-8 mx-auto font-monospace">MARKET ANALYSIS // PROBLEM STATEMENT</p>
+    </div>
+    <div class="row g-4">
+      @for (item of roadblocks(); track item.title) {
+        <div class="col-md-6 col-lg-3 d-flex">
+          <div class="glass-card h-100 w-100 p-4 rounded-1 position-relative overflow-hidden group">
+            <div class="position-absolute top-0 end-0 p-2 opacity-25 text-primary">
+               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            </div>
+            <h3 class="card-title text-primary h5 fw-bold mb-3 text-uppercase">{{ item.title }}</h3>
+            <p class="card-text text-secondary mb-0">{{ item.description }}</p>
+            <div class="mt-4 border-top border-secondary opacity-25 pt-2">
+               <span class="text-danger font-monospace fs-7">CRITICAL</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
