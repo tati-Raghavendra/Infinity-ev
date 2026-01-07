@@ -30,42 +30,55 @@ export class AdminDashboardComponent implements OnInit {
         this.messages.set(data);
         this.loading.set(false);
       },
-      error: (err: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse | Error) => {
         // Fix: Improved logging to avoid [object Object] in text logs
         // Using console.error with spread arguments often helps in browsers, 
         // but explicit message logging is safer for text logs.
-        console.error('Error fetching messages:', err.message, err);
+        console.error('Error fetching messages:', err);
         
         let errorMessage = 'Unknown error occurred';
+        let status: number | string | undefined = undefined;
         
-        if (err.status === 0) {
+        // Handle HttpErrorResponse (from HTTP client)
+        if (err instanceof HttpErrorResponse) {
+          status = err.status;
+          
+          if (err.status === 0) {
             errorMessage = 'Unable to connect to the server. Please ensure the backend is running.';
-        } else if (err.error) {
-             // Handle Express/Node backend error responses
-             if (typeof err.error === 'object') {
-                 // Check for specific property 'error' which our backend uses
-                 // Using 'in' operator check or direct property access with type assertion
-                 const errObj = err.error as any;
-                 if (errObj.error) {
-                     errorMessage = errObj.error;
-                 } else if (errObj.message) {
-                     errorMessage = errObj.message;
-                 } else {
-                     // Fallback for other objects, try to stringify
-                     try {
-                        errorMessage = JSON.stringify(errObj);
-                     } catch (e) {
-                        errorMessage = 'Invalid error object received';
-                     }
-                 }
-             } else {
-                 errorMessage = String(err.error);
-             }
-        } else if (err.message) {
+          } else if (err.error) {
+            // Handle Express/Node backend error responses
+            if (typeof err.error === 'object') {
+              // Check for specific property 'error' which our backend uses
+              // Using 'in' operator check or direct property access with type assertion
+              const errObj = err.error as any;
+              if (errObj.error) {
+                errorMessage = errObj.error;
+              } else if (errObj.message) {
+                errorMessage = errObj.message;
+              } else {
+                // Fallback for other objects, try to stringify
+                try {
+                  errorMessage = JSON.stringify(errObj);
+                } catch (e) {
+                  errorMessage = 'Invalid error object received';
+                }
+              }
+            } else {
+              errorMessage = String(err.error);
+            }
+          } else if (err.message) {
             errorMessage = err.message;
+          }
+        } else if (err instanceof Error) {
+          // Handle regular Error objects (from map operator or other sources)
+          errorMessage = err.message || 'An error occurred while processing the response';
+        } else {
+          // Fallback for any other error type
+          errorMessage = String(err);
         }
 
-        this.error.set(`System Alert: ${errorMessage} (Status: ${err.status})`);
+        const statusText = status !== undefined ? ` (Status: ${status})` : '';
+        this.error.set(`System Alert: ${errorMessage}${statusText}`);
         this.loading.set(false);
       }
     });

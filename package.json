@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "ng serve",
     "build": "ng build",
-    "preview": "ng serve --configuration=production"
+    "preview": "ng serve --configuration=production",
+    "server:build": "cd server && npm install && npm run build",
+    "server:dev": "cd server && npm run dev",
+    "server:start": "cd server && npm run build && npm start"
   },
   "dependencies": {
     "rxjs": "^7.8.2",

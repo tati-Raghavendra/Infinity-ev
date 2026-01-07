@@ -5,7 +5,7 @@ import path from 'path';
 
 const app = express();
 // Use 3001 by default to avoid clashing with the Angular dev server on 3000.
-const port = process.env.PORT || 3001;
+const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 
 // Database setup
 // Logic: If the current working directory ends with 'server', we are already inside it.
@@ -37,7 +37,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
 });
 
 // Middleware
-app.use(cors()); // Enable Cross-Origin Resource Sharing
+// CORS configuration: explicitly allow requests from Angular dev server on port 3000
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 // Fix: Cast express.json() to 'any' to resolve potential 'NextHandleFunction' vs 'PathParams' overload mismatch in some TS environments.
 app.use(express.json() as any); 
 
@@ -69,6 +75,15 @@ app.post('/api/contact', (req: express.Request, res: express.Response) => {
   });
 });
 
+// Health check endpoint
+app.get('/api/health', (req: express.Request, res: express.Response) => {
+  (res as any).status(200).json({ 
+    status: 'ok', 
+    message: 'Backend server is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // GET Route to retrieve contact messages (Admin)
 app.get('/api/contact', (req: express.Request, res: express.Response) => {
   const sql = "SELECT * FROM contacts ORDER BY submitted_at DESC";
@@ -84,6 +99,10 @@ app.get('/api/contact', (req: express.Request, res: express.Response) => {
 });
 
 // Start the server
-app.listen(port, () => {
+// Listen on all network interfaces (0.0.0.0) to allow connections from other devices on the network
+app.listen(port, '0.0.0.0', () => {
   console.log(`Server is running on http://localhost:${port}`);
+  console.log(`API endpoints:`);
+  console.log(`  - Health check: http://localhost:${port}/api/health`);
+  console.log(`  - Contact API: http://localhost:${port}/api/contact`);
 });
